@@ -346,7 +346,7 @@ namespace test {
         Element* ptr_;
 
         template <class T>
-        static constexpr bool at_least = derived_from<Category, T>;
+        static constexpr bool at_least = std::bool_constant<derived_from<Category, T>>::value;
 
         using ReferenceType = conditional_t<to_bool(Proxy), proxy_reference<Category, Element>, Element&>;
 
