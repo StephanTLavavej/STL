@@ -1,9 +1,10 @@
 {
     "extends": "./tsconfig.universal.json",
     "compilerOptions": {
-        "module": "CommonJS",
+        "module": "ES2020",
+        "noEmit": true,
     },
     "files": [
-        "./src/gather_stats.ts",
+        "./src/status_chart.ts",
     ],
 }
