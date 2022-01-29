@@ -4,6 +4,10 @@
   "description": "STL Status Chart",
   "main": "gather_stats.js",
   "scripts": {
+    "prebuild": "npx tsc -p tsconfig.status_chart.json",
+    "build": "npx esbuild src/status_chart.ts --bundle --minify --target=es2020 --outfile=built/status_chart.js",
+    "pregather": "npx tsc",
+    "gather": "node built/gather_stats.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
