@@ -394,7 +394,6 @@ function write_generated_file(filename: string, table_str: string) {
     let str = '// Copyright (c) Microsoft Corporation.\n';
     str += '// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception\n\n';
     str += generated_file_warning_comment;
-    str += "'use strict';\n";
     str += table_str;
     str += generated_file_warning_comment;
 
@@ -573,7 +572,21 @@ function write_daily_table(script_start: DateTime, all_prs: CookedPRNode[], all_
         progress_bar.stop();
     }
 
-    let str = 'const daily_table = [\n';
+    let str = 'export type DailyRow = {\n';
+    str += '    date: string;\n';
+    str += '    merged: number;\n';
+    str += '    pr: number | null;\n';
+    str += '    cxx20: number | null;\n';
+    str += '    cxx23: number | null;\n';
+    str += '    lwg: number | null;\n';
+    str += '    issue: number | null;\n';
+    str += '    bug: number | null;\n';
+    str += '    avg_age: number;\n';
+    str += '    avg_wait: number;\n';
+    str += '    sum_age: number;\n';
+    str += '    sum_wait: number;\n';
+    str += '};\n';
+    str += 'export const daily_table: DailyRow[] = [\n';
 
     for (let i = 0; i < rows.length; ++i) {
         const row = rows[i];
@@ -599,7 +612,7 @@ function write_daily_table(script_start: DateTime, all_prs: CookedPRNode[], all_
 
     str += '];\n';
 
-    write_generated_file('./daily_table.js', str);
+    write_generated_file('./daily_table.ts', str);
 }
 
 function write_monthly_table(script_start: DateTime, all_prs: CookedPRNode[]) {
@@ -613,7 +626,11 @@ function write_monthly_table(script_start: DateTime, all_prs: CookedPRNode[]) {
         }
     }
 
-    let str = 'const monthly_table = [\n';
+    let str = 'export type MonthlyRow = {\n';
+    str += '    date: string;\n';
+    str += '    merge_bar: number;\n';
+    str += '};\n';
+    str += 'export const monthly_table: MonthlyRow[] = [\n';
 
     // Analyze complete months.
     const begin = DateTime.fromISO('2019-10-01');
@@ -631,7 +648,7 @@ function write_monthly_table(script_start: DateTime, all_prs: CookedPRNode[]) {
 
     str += '];\n';
 
-    write_generated_file('./monthly_table.js', str);
+    write_generated_file('./monthly_table.ts', str);
 }
 
 async function async_main() {
