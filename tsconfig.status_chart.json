@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig.universal.json",
+    "compilerOptions": {
+        "noEmit": true,
+    },
+    "files": [
+        "./src/status_chart.ts"
+    ]
+}

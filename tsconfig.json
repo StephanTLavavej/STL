@@ -1,16 +1,6 @@
 {
-    "compilerOptions": {
-        "module": "CommonJS",
-        "outDir": "./built",
-        "target": "ES2020",
-        "allowUnreachableCode": false,
-        "allowUnusedLabels": false,
-        "esModuleInterop": true,
-        "exactOptionalPropertyTypes": true,
-        "strict": true,
-        "forceConsistentCasingInFileNames": true,
-    },
-    "include": [
-        "./src/**/*"
+    "extends": "./tsconfig.universal.json",
+    "files": [
+        "./src/gather_stats.ts"
     ]
 }
