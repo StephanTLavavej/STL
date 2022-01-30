@@ -389,15 +389,16 @@ function calculate_sliding_window(when: DateTime, merged: DateTime) {
 }
 
 function write_generated_file(filename: string, table_str: string) {
-    const generated_file_warning_comment = '// Generated file - DO NOT EDIT manually!\n';
+    const str = `
+// Copyright (c) Microsoft Corporation.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-    let str = '// Copyright (c) Microsoft Corporation.\n';
-    str += '// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception\n\n';
-    str += generated_file_warning_comment;
-    str += table_str;
-    str += generated_file_warning_comment;
+// Generated file - DO NOT EDIT manually!
+${table_str.trim()}
+// Generated file - DO NOT EDIT manually!
+`;
 
-    fs.writeFileSync(filename, str);
+    fs.writeFileSync(filename, str.trimStart());
 }
 
 type Row = {
@@ -572,21 +573,23 @@ function write_daily_table(script_start: DateTime, all_prs: CookedPRNode[], all_
         progress_bar.stop();
     }
 
-    let str = 'export type DailyRow = {\n';
-    str += '    date: string;\n';
-    str += '    merged: number;\n';
-    str += '    pr: number | null;\n';
-    str += '    cxx20: number | null;\n';
-    str += '    cxx23: number | null;\n';
-    str += '    lwg: number | null;\n';
-    str += '    issue: number | null;\n';
-    str += '    bug: number | null;\n';
-    str += '    avg_age: number;\n';
-    str += '    avg_wait: number;\n';
-    str += '    sum_age: number;\n';
-    str += '    sum_wait: number;\n';
-    str += '};\n';
-    str += 'export const daily_table: DailyRow[] = [\n';
+    let str = `
+export type DailyRow = {
+    date: string;
+    merged: number;
+    pr: number | null;
+    cxx20: number | null;
+    cxx23: number | null;
+    lwg: number | null;
+    issue: number | null;
+    bug: number | null;
+    avg_age: number;
+    avg_wait: number;
+    sum_age: number;
+    sum_wait: number;
+};
+export const daily_table: DailyRow[] = [
+`;
 
     for (let i = 0; i < rows.length; ++i) {
         const row = rows[i];
@@ -626,11 +629,13 @@ function write_monthly_table(script_start: DateTime, all_prs: CookedPRNode[]) {
         }
     }
 
-    let str = 'export type MonthlyRow = {\n';
-    str += '    date: string;\n';
-    str += '    merge_bar: number;\n';
-    str += '};\n';
-    str += 'export const monthly_table: MonthlyRow[] = [\n';
+    let str = `
+export type MonthlyRow = {
+    date: string;
+    merge_bar: number;
+};
+export const monthly_table: MonthlyRow[] = [
+`;
 
     // Analyze complete months.
     const begin = DateTime.fromISO('2019-10-01');
