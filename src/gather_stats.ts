@@ -644,11 +644,9 @@ export const monthly_table: MonthlyRow[] = [
         const value = monthly_merges.get(year_month) ?? 0;
 
         str += '    { ';
-        str += [
-            `date: '${year_month}-16'`, // position each bar in the middle of each month
-            `merge_bar: ${value}`,
-            '},\n',
-        ].join(', ');
+        str += `date: '${year_month}-16', `; // position each bar in the middle of each month
+        str += `merge_bar: ${value}, `;
+        str += '},\n';
     }
 
     str += '];\n';
