@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
+import Chart, { ChartEvent, ChartType, LegendElement, LegendItem, TimeUnit } from 'chart.js/auto';
+import 'chartjs-adapter-date-fns';
+
 import { DailyRow, daily_table } from '../daily_table';
 import { WeeklyRow, weekly_table } from '../weekly_table';
 import { MonthlyRow, monthly_table } from '../monthly_table';
