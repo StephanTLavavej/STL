@@ -252,8 +252,8 @@ const common_options = {
     },
     elements: {
         line: {
-            borderCapStyle: 'round',
-            borderJoinStyle: 'round',
+            borderCapStyle: 'round' as const,
+            borderJoinStyle: 'round' as const,
             fill: false,
             spanGaps: false,
         },
@@ -262,7 +262,7 @@ const common_options = {
         },
     },
     hover: {
-        mode: 'nearest',
+        mode: 'nearest' as const,
     },
 };
 
@@ -297,7 +297,7 @@ const common_plugins = {
         onClick: legend_click_handler,
     },
     tooltip: {
-        mode: 'nearest',
+        mode: 'nearest' as const,
         intersect: false,
     },
 };
@@ -311,7 +311,7 @@ const common_title = {
 
 function make_xAxis(timeframe: Timeframe) {
     return {
-        type: 'time',
+        type: 'time' as const,
         min: timeframe.min,
         max: daily_table[daily_table.length - 1].date,
         grid: {
@@ -341,9 +341,9 @@ const status_options = {
     scales: {
         x: make_xAxis(timeframes[timeframe_idx]),
         largeAxis: {
-            type: 'linear',
-            display: 'auto',
-            position: 'left',
+            type: 'linear' as const,
+            display: 'auto' as const,
+            position: 'left' as const,
             title: {
                 display: true,
                 text: 'Bugs, Issues, Skipped Libcxx Tests',
@@ -355,9 +355,9 @@ const status_options = {
             },
         },
         smallAxis: {
-            type: 'linear',
-            display: 'auto',
-            position: 'right',
+            type: 'linear' as const,
+            display: 'auto' as const,
+            position: 'right' as const,
             title: {
                 display: true,
                 text: 'Features, LWG Resolutions, Pull Requests',
@@ -383,9 +383,9 @@ const age_options = {
     scales: {
         x: make_xAxis(timeframe_github),
         leftAxis: {
-            type: 'linear',
-            display: 'auto',
-            position: 'left',
+            type: 'linear' as const,
+            display: 'auto' as const,
+            position: 'left' as const,
             title: {
                 display: true,
                 text: 'Average Age, Average Wait (days)',
@@ -397,9 +397,9 @@ const age_options = {
             },
         },
         rightAxis: {
-            type: 'linear',
-            display: 'auto',
-            position: 'right',
+            type: 'linear' as const,
+            display: 'auto' as const,
+            position: 'right' as const,
             title: {
                 display: true,
                 text: 'Combined Age, Combined Wait (PR-months)',
@@ -425,9 +425,9 @@ const merge_options = {
     scales: {
         x: make_xAxis(timeframe_github),
         mergeAxis: {
-            type: 'linear',
-            display: 'auto',
-            position: 'right',
+            type: 'linear' as const,
+            display: 'auto' as const,
+            position: 'right' as const,
             title: {
                 display: true,
                 text: 'PRs / month',
