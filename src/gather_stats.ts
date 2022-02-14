@@ -240,7 +240,7 @@ function read_trimmed_lines(filename: string) {
 
 type DuplicateWarningMessage = (username: string) => string;
 
-function warn_about_duplicates(array: string[], message: DuplicateWarningMessage) {
+function warn_about_duplicates(array: string[], message) {
     const uniques = new Set<string>();
     const duplicates = new Set<string>();
 
