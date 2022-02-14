@@ -8,6 +8,8 @@ import { DailyRow, daily_table } from '../daily_table';
 import { WeeklyRow, weekly_table } from '../weekly_table';
 import { MonthlyRow, monthly_table } from '../monthly_table';
 
+// Purr! =^..^=
+
 type StlDataPoint = {
     x: string;
     y: number | null;
