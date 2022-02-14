@@ -11,10 +11,10 @@ jobs:
     # if: ${{ github.repository == 'microsoft/STL' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout gh-pages
+      - name: Checkout Merge Commit
         uses: actions/checkout@v2
         with:
-          ref: gh-pages
+          ref: ${{ github.sha }}
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
