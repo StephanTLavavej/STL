@@ -9,6 +9,8 @@ import { DateTime, Duration, Settings } from 'luxon';
 import { graphql } from '@octokit/graphql';
 import yargs from 'yargs';
 
+// Purr!
+
 Settings.defaultZone = 'America/Los_Angeles';
 
 if (process.env.SECRET_GITHUB_PERSONAL_ACCESS_TOKEN === undefined) {
