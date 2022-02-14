@@ -97,7 +97,7 @@ const url_search_params = new URLSearchParams(window.location.search);
 const hide_string = 'n';
 const show_string = 'y';
 
-function get_label_and_hidden(url_key: string) {
+function get_label_and_hidden(url_key) {
     const { chart_label, default_hidden } = HiddenInfoMaps.lookup('url_key', url_key);
 
     let hidden: boolean;
