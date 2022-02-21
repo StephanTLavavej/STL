@@ -618,7 +618,7 @@ export const daily_table: DailyRow[] = [
     write_generated_file('./src/daily_table.ts', str);
 }
 
-function write_monthly_table(script_start: DateTime, all_prs: CookedPRNode[]) {
+function write_monthly_table(script_start, all_prs: CookedPRNode[]) {
     const monthly_merges = new Map<string, number>();
 
     for (const pr of all_prs) {
