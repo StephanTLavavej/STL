@@ -36,7 +36,7 @@ function get_weekly_values(key: Exclude<keyof WeeklyRow, 'date'>) {
     return get_values(weekly_table, row => row[key]);
 }
 
-function get_monthly_values(key: Exclude<keyof MonthlyRow, 'date'>) {
+function get_monthly_values(key) {
     return get_values(monthly_table, row => row[key]);
 }
 
