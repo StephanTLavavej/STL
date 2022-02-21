@@ -337,7 +337,7 @@ const common_title = {
     },
 };
 
-function make_xAxis(timeframe: Timeframe) {
+function make_xAxis(timeframe) {
     return {
         type: 'time' as const,
         min: timeframe.min,
