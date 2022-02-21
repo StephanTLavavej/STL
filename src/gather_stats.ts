@@ -205,7 +205,7 @@ async function retrieve_nodes() {
 type PaginationWarningMessage = (retrieved: number, total: number, id: number) => string;
 
 function warn_if_pagination_needed<RawNode extends RawPRNode | RawIssueNode>(
-    outer_nodes: RawNode[],
+    outer_nodes,
     get_field: (node: RawNode) => RawLabels | RawReviews,
     message: PaginationWarningMessage
 ) {
