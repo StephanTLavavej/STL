@@ -790,9 +790,8 @@ concept _Layout_mapping_alike = requires {
 };
 
 template <class _Extents>
-class __declspec(empty_bases) layout_stride::mapping
-    : private _Maybe_fully_static_extents<_Extents>,
-      private _Maybe_empty_array<typename _Extents::index_type, _Extents::rank()> {
+class layout_stride::mapping : private _Maybe_fully_static_extents<_Extents>,
+                               private _Maybe_empty_array<typename _Extents::index_type, _Extents::rank()> {
 public:
     using extents_type = _Extents;
     using index_type   = extents_type::index_type;
