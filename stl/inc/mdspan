@@ -140,8 +140,7 @@ private:
     }
 
     template <class _OtherIndexType, size_t... _Indices>
-    constexpr explicit extents(
-        span<_OtherIndexType, size_t{_Rank_dynamic}> _Dynamic_exts, index_sequence<_Indices...>) noexcept
+    constexpr explicit extents(span<_OtherIndexType, _Rank_dynamic> _Dynamic_exts, index_sequence<_Indices...>) noexcept
         : _Base{static_cast<index_type>(_STD as_const(_Dynamic_exts[_Indices]))...} {
         _STL_INTERNAL_STATIC_ASSERT(is_convertible_v<const _OtherIndexType&, index_type>
                                     && is_nothrow_constructible_v<index_type, const _OtherIndexType&>);
