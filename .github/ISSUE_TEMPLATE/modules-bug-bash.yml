@@ -1,0 +1,109 @@
+# Copyright (c) Microsoft Corporation.
+# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+
+name: Modules Bug Bash
+description: For the Standard Library Modules Bug Bash
+title: "Modules: `<HEADER_NAME_HERE>`: SUMMARIZE_PROBLEM_HERE"
+labels: modules
+body:
+- type: checkboxes
+  attributes:
+    label: Getting Started
+    description: >
+      Please read the rules for the
+      [Standard Library Modules Bug Bash](https://github.com/StephanTLavavej/STL/wiki/Standard-Library-Modules-Bug-Bash)
+      and look at the
+      [open issues for modules](https://github.com/microsoft/STL/issues?q=is%3Aopen+is%3Aissue+label%3Amodules)
+      to avoid submitting duplicates.
+    options:
+    - label: I've read the rules.
+      required: true
+    - label: I'm using the latest VS Preview.
+      required: true
+    - label: I've looked at the open issues today.
+      required: true
+    - label: I've filled out the bug title above.
+      required: true
+- type: dropdown
+  attributes:
+    label: Bug Category
+    description: >
+      What kind of bug is this? These categories are explained in the rules.
+    options:
+    - ""
+    - silent-bad-codegen
+    - warning-on-valid
+    - rejects-valid
+    - ICE-on-valid
+    - accepts-invalid
+    - wrong-diagnostic
+    - ICE-on-invalid
+    - something-else (please explain below)
+    default: 0
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Test Case
+    description: >
+      My test case that works with classic includes but fails with named modules:
+    placeholder: |
+      #include <assert.h>
+
+      #ifdef USE_CLASSIC_INCLUDES
+          #include <cerrno>
+          #include <cmath>
+          #include <cstdio>
+      #else
+          import std;
+      #endif
+
+      int main() {
+      #ifdef USE_CLASSIC_INCLUDES
+          std::puts("Classic includes.");
+      #else
+          std::puts("Named modules.");
+      #endif
+
+          const double dbl{std::sqrt(2.25)};
+          const int err{errno};
+          std::printf("dbl: %g\n", dbl);
+          std::printf("err: %d\n", err);
+      }
+    render: cpp
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Results for Classic Includes
+    description: >
+      Please provide the entire command line, entire compiler output, and entire runtime output (if applicable).
+    placeholder: |
+      C:\GitHub\STL>cl /EHsc /nologo /W4 /std:c++latest /MTd /Od woof.cpp /DUSE_CLASSIC_INCLUDES && woof.exe
+      woof.cpp
+      Classic includes.
+      dbl: 1.5
+      err: 0
+    render: text
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Results for Named Modules
+    description: >
+      Please provide the entire command line, entire compiler output, and entire runtime output (if applicable).
+    placeholder: |
+      C:\GitHub\STL>cl /EHsc /nologo /W4 /std:c++latest /MTd /Od woof.cpp std.obj && woof.exe
+      woof.cpp
+      woof.cpp(19): error C2065: 'errno': undeclared identifier
+    render: text
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Additional Context
+    description: |
+      Anything else? Feel free to leave this empty.
+
+      If you're building the microsoft/STL repo to use our latest sources, that's awesome.
+      Please mention what branch you're building (usually `main`) and your current commit (run `git rev-parse HEAD`).
