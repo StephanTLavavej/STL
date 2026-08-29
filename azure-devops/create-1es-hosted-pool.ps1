@@ -9,11 +9,11 @@ Creates a 1ES Hosted Pool, set up for the STL's CI.
 See https://github.com/microsoft/STL/wiki/Checklist-for-Toolset-Updates for more information.
 
 .PARAMETER VMSku
-The VM SKU can be Fadsv7 or Dpdsv6.
+The VM SKU can be Fadsv7, Dpdsv6, or Dpdsv7.
 #>
 [CmdletBinding(PositionalBinding=$false)]
 Param(
-  [Parameter(Mandatory)][ValidateSet('Fadsv7', 'Dpdsv6')][String]$VMSku
+  [Parameter(Mandatory)][ValidateSet('Fadsv7', 'Dpdsv6', 'Dpdsv7')][String]$VMSku
 )
 
 $ErrorActionPreference = 'Stop'
@@ -36,6 +36,7 @@ $Timestamp = $CurrentDate.ToString('yyyy-MM-ddTHHmm')
 # | Fadsv7 | swedencentral  |  2560 |
 # | Dpdsv6 | australiaeast  |  2048 |
 # | Dpdsv6 | southcentralus |  2048 |
+# | Dpdsv7 |indonesiacentral|  ???? |
 
 if ($VMSku -ieq 'Fadsv7') {
   $Arch = 'x64'
@@ -51,6 +52,13 @@ if ($VMSku -ieq 'Fadsv7') {
   $PoolSkuName = 'Standard_D64pds_v6'
   $PoolSize = 32 # Locations where we have quota for at least 2048 cores (32 VMs):
   $AvailableLocations = @('australiaeast', 'southcentralus')
+} elseif ($VMSku -ieq 'Dpdsv7') {
+  $Arch = 'arm64'
+  $DiskType = 'NVMe'
+  $ProtoVMSize = 'Standard_D16pds_v7'
+  $PoolSkuName = 'Standard_D64pds_v7'
+  $PoolSize = 2 # Unrealistically small size for testing!
+  $AvailableLocations = @('indonesiacentral')
 }
 
 $AvailableLocationIdx = 15 # Increment for each new set of pools, to cycle through the available locations.
