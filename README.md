@@ -553,37 +553,33 @@ vehicles.
 ```mermaid
 flowchart TB
 %%{ init: {"flowchart": {"htmlLabels": true}} }%%
-    classDef default text-align:left
-    subgraph VisualStudioSubgraph[Visual Studio]
-        direction TB
-        STLNode("<b>STL</b>
-        This repo; provides C++ Standard Library headers, separately
-        compiled implementations of most of the iostreams functionality,
-        and a few runtime support components like std::exception_ptr.")
-        subgraph VCRuntimeSubgraph[VCRuntime]
-            direction TB
-            VCStartupNode("<b>VCStartup</b>
-            Provides compiler support mechanisms that
-            live in each binary; such as machinery to
-            call constructors and destructors for global
-            variables, the entry point, and the /GS cookie.<br>
-            Merged into static and import libraries of VCRuntime.")
-            VCRuntimeNode("<b>VCRuntime</b>
-            Provides compiler support mechanisms that can be
-            shared between binaries; code that the compiler calls
-            on your behalf, such as the C++ exception handling
-            runtime, string.h intrinsics, math intrinsics, and
-            declarations for CPU-vendor-specific intrinsics.")
-        end
-    end
-    subgraph WindowsSDKSubgraph[Windows SDK]
-        UniversalCRTNode("<b>Universal CRT</b>
-        Windows component that provides C library support, such as printf,
-        C locales, and some POSIX-like shims for the Windows API, like _stat.")
-    end
-    STLNode ==> VCRuntimeSubgraph & UniversalCRTNode
-    VCStartupNode ==> VCRuntimeNode ==> UniversalCRTNode
+classDef default text-align:left
+subgraph VisualStudioSubgraph[Visual Studio]
+  direction TB
+  STLNode("<b>STL</b>")
+  subgraph VCRuntimeSubgraph[VCRuntime]
+    direction TB
+    VCStartupNode("<b>VCStartup</b>")
+    VCRuntimeNode("<b>VCRuntime</b>")
+  end
+end
+subgraph WindowsSDKSubgraph[Windows SDK]
+  UniversalCRTNode("<b>Universal CRT</b>")
+end
+STLNode ==> VCRuntimeSubgraph & UniversalCRTNode
+VCStartupNode ==> VCRuntimeNode ==> UniversalCRTNode
 ```
+
+* **STL**: This repo; provides C++ Standard Library headers, separately compiled implementations
+  of most of the iostreams functionality, and a few runtime support components like `std::exception_ptr`.
+* **VCStartup**: Provides compiler support mechanisms that live in each binary; such as machinery
+  to call constructors and destructors for global variables, the entry point, and the `/GS` cookie.
+  Merged into static and import libraries of VCRuntime.
+* **VCRuntime**: Provides compiler support mechanisms that can be shared between binaries;
+  code that the compiler calls on your behalf, such as the C++ exception handling runtime,
+  `string.h` intrinsics, math intrinsics, and declarations for CPU-vendor-specific intrinsics.
+* **Universal CRT**: Windows component that provides C library support, such as `printf`,
+  C locales, and some POSIX-like shims for the Windows API, like `_stat`.
 
 # Contributing
 
