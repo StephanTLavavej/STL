@@ -4670,11 +4670,7 @@ namespace chrono {
     }
 
     namespace _From_stream_adl_only {
-#if defined(__clang__) || defined(__EDG__) // TRANSITION, VSO-1681199
         void from_stream() = delete; // Block unqualified name lookup
-#else // ^^^ no workaround / workaround vvv
-        void from_stream();
-#endif // ^^^ workaround ^^^
 
         template <class _Parsable, class _CharT, class _Traits, class... _Rest>
         concept _Can_from_stream = requires(
