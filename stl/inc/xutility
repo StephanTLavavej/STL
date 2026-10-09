@@ -1002,7 +1002,11 @@ concept _Destructible_object = is_object_v<_Ty> && destructible<_Ty>;
 
 namespace ranges {
     namespace _Iter_move {
+#if defined(__clang__) || defined(__EDG__) // TRANSITION, VSO-1681199
         void iter_move() = delete; // Block unqualified name lookup
+#else // ^^^ no workaround / workaround vvv
+        void iter_move();
+#endif // ^^^ workaround ^^^
 
         template <class _Ty>
         concept _Has_ADL = _Has_class_or_enum_type<_Ty> && requires(_Ty&& __t) {
@@ -2739,7 +2743,11 @@ namespace ranges {
     concept _Should_range_access = is_lvalue_reference_v<_Rng> || enable_borrowed_range<remove_cvref_t<_Rng>>;
 
     namespace _Begin {
+#if defined(__clang__) || defined(__EDG__) // TRANSITION, VSO-1681199
         void begin() = delete; // Block unqualified name lookup
+#else // ^^^ no workaround / workaround vvv
+        void begin();
+#endif // ^^^ workaround ^^^
 
         template <class _Ty>
         concept _Has_member = requires(_Ty __t) {
@@ -2804,7 +2812,11 @@ namespace ranges {
     using iterator_t = decltype(_RANGES begin(_STD declval<_Ty&>()));
 
     namespace _End {
+#if defined(__clang__) || defined(__EDG__) // TRANSITION, VSO-1681199
         void end() = delete; // Block unqualified name lookup
+#else // ^^^ no workaround / workaround vvv
+        void end();
+#endif // ^^^ workaround ^^^
 
         template <class _Ty>
         concept _Has_member = requires(_Ty __t) {
@@ -3155,7 +3167,11 @@ namespace ranges {
     }
 
     namespace _Rbegin {
+#if defined(__clang__) || defined(__EDG__) // TRANSITION, VSO-1681199
         void rbegin() = delete; // Block unqualified name lookup
+#else // ^^^ no workaround / workaround vvv
+        void rbegin();
+#endif // ^^^ workaround ^^^
 
         template <class _Ty>
         concept _Has_member = requires(_Ty __t) {
@@ -3219,7 +3235,11 @@ namespace ranges {
     }
 
     namespace _Rend {
+#if defined(__clang__) || defined(__EDG__) // TRANSITION, VSO-1681199
         void rend() = delete; // Block unqualified name lookup
+#else // ^^^ no workaround / workaround vvv
+        void rend();
+#endif // ^^^ workaround ^^^
 
         template <class _Ty>
         concept _Has_member = requires(_Ty __t) {
@@ -3348,7 +3368,11 @@ namespace ranges {
     constexpr bool disable_sized_range = false; // specializations allowed by N5014 [range.sized]/3
 
     namespace _Size {
+#if defined(__clang__) || defined(__EDG__) // TRANSITION, VSO-1681199
         void size() = delete; // Block unqualified name lookup
+#else // ^^^ no workaround / workaround vvv
+        void size();
+#endif // ^^^ workaround ^^^
 
         template <class _Ty, class _UnCV>
         concept _Has_member = !disable_sized_range<_UnCV> && requires(_Ty __t) {
