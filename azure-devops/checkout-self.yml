@@ -9,14 +9,24 @@ steps:
   fetchTags: false
   retryCountOnTaskFailure: 4
 - task: PowerShell@2
-  displayName: 'Clean After Checkout'
+  displayName: 'Clean and Configure After Checkout'
   inputs:
     pwsh: true
     targetType: inline
     script: |
       $PSNativeCommandUseErrorActionPreference = $true
+
       git clean --quiet -x -d -f -f
+
       if (Test-Path -LiteralPath "$(tmpDir)") {
           Remove-Item -LiteralPath "$(tmpDir)" -Recurse -Force
       }
       mkdir "$(tmpDir)" -Force | Out-Null
+
+      $fetch = 'git fetch --no-recurse-submodules --filter=tree:0 --depth=1 origin "$1"'
+      $setSparseCheckout = 'git sparse-checkout set --sparse-index libcxx/test libcxx/utils/libcxx llvm/utils/lit'
+      $checkout = 'git checkout --quiet --force'
+
+      git config submodule.llvm-project.update "!$fetch && $setSparseCheckout && $checkout"
+      git config submodule.boost-math.update "!$fetch && $checkout"
+      git config submodule.benchmarks/google-benchmark.update "!$fetch && $checkout"
