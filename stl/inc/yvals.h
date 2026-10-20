@@ -486,13 +486,13 @@ private:
 #else // ^^^ _HAS_EXCEPTIONS / !_HAS_EXCEPTIONS vvv
 #define _TRY_BEGIN \
     {              \
-        if (1) {
+        if constexpr (true) {
 #define _CATCH(x) \
     }             \
-    else if (0) {
+    else if constexpr (false) {
 #define _CATCH_ALL \
     }              \
-    else if (0) {
+    else if constexpr (false) {
 #define _CATCH_END \
     }              \
     }
