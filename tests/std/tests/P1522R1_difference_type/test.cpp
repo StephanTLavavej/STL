@@ -1004,10 +1004,10 @@ constexpr bool CanConditional<T, U, std::void_t<decltype(true ? val<T>() : val<U
 constexpr bool test_cross() {
     // Test the behavior of cross-type operations.
 
-#define TEST(expr, result)                                                                 \
-    do {                                                                                   \
-        STATIC_ASSERT(SAME_AS<decltype((expr)), std::remove_const_t<decltype((result))>>); \
-        assert((expr) == (result));                                                        \
+#define TEST(expr, result)                                            \
+    do {                                                              \
+        STATIC_ASSERT(SAME_AS<decltype((expr)), decltype((result))>); \
+        assert((expr) == (result));                                   \
     } while (0)
 
     //////// Mixed integer-class operands
