@@ -1032,7 +1032,7 @@ constexpr bool test_cross() {
     TEST(_Unsigned128{42} ^ _Signed128{43}, _Unsigned128{1});
     TEST(_Signed128{42} ^ _Unsigned128{43}, _Unsigned128{1});
 
-    // Shifts yield a result of the left operand's type.
+    // Shifts yield a result of the promoted left operand's type.
 
     TEST(_Unsigned128{1} << _Signed128{43}, _Unsigned128{1ull << 43});
     TEST(_Signed128{1} << _Unsigned128{43}, _Signed128{1ull << 43});
@@ -1187,17 +1187,25 @@ constexpr bool test_cross() {
     TEST(42 ^ _Signed128{43}, _Signed128{1});
     TEST(42 ^ _Unsigned128{43}, _Unsigned128{1});
 
-    // Shifts yield a result of the left operand's type.
+    // Shifts yield a result of the promoted left operand's type.
 
     TEST(_Unsigned128{1} << 4, _Unsigned128{1ull << 4});
     TEST(_Signed128{1} << 4, _Signed128{1ull << 4});
     TEST(1 << _Signed128{4}, 16);
     TEST(1 << _Unsigned128{4}, 16);
+    TEST(static_cast<unsigned char>(1) << _Signed128{10}, 1024); // promotion allows the result to exceed 255
+    TEST(static_cast<unsigned char>(1) << _Unsigned128{10}, 1024); // promotion allows the result to exceed 255
+    TEST(1ULL << _Signed128{4}, 16ULL);
+    TEST(1ULL << _Unsigned128{4}, 16ULL);
 
     TEST((_Unsigned128{0, 1}) >> 3, _Unsigned128{1ull << 61});
     TEST((_Signed128{0, 1}) >> 3, _Signed128{1ull << 61});
     TEST(256 >> _Signed128{3}, 32);
     TEST(256 >> _Unsigned128{3}, 32);
+    TEST(static_cast<unsigned short>(256) >> _Signed128{3}, 32); // promoted to int
+    TEST(static_cast<unsigned short>(256) >> _Unsigned128{3}, 32); // promoted to int
+    TEST(256ULL >> _Signed128{3}, 32ULL);
+    TEST(256ULL >> _Unsigned128{3}, 32ULL);
 
     TEST(true ? _Unsigned128{42} : 13, _Unsigned128{42});
     TEST(true ? _Signed128{42} : 13, _Signed128{42});
