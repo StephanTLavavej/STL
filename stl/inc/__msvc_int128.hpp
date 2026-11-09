@@ -1465,8 +1465,8 @@ struct _Signed128 : _Base128 {
     }
 
     _TEMPLATE_CLASS_INTEGRAL(_Ty)
-    _NODISCARD friend constexpr _Signed128 operator%(_Signed128 _Left, const _Ty _Right) noexcept {
-        return _Left % _Signed128{_Right};
+    _NODISCARD friend constexpr _Signed128 operator%(_Signed128 _Num, const _Ty _Den) noexcept {
+        return _Num % _Signed128{_Den};
     }
 
     _TEMPLATE_CLASS_INTEGRAL(_Ty)
