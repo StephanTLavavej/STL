@@ -1078,7 +1078,7 @@ struct _Unsigned128 : _Base128 {
     }
 
     _TEMPLATE_CLASS_INTEGRAL(_Ty)
-    _NODISCARD friend constexpr _Unsigned128 operator%(const _Base128& _Num, const _Ty _Den) noexcept {
+    _NODISCARD friend constexpr _Unsigned128 operator%(const _Unsigned128& _Num, const _Ty _Den) noexcept {
 #if !_STL_128_DIV_INTRINSICS
         if constexpr (sizeof(_Ty) <= 4) {
             return _Unsigned128{_Base128::_Modulo(_Num, static_cast<uint32_t>(_Den))};
