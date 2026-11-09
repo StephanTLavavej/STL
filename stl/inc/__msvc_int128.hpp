@@ -362,12 +362,12 @@ struct alignas(16) _Base128 {
     }
 
     _TEMPLATE_CLASS_INTEGRAL(_Ty)
-    _NODISCARD friend constexpr _Ty operator<<(const _Ty _Left, const _Base128& _Right) noexcept {
+    _NODISCARD friend constexpr auto operator<<(const _Ty _Left, const _Base128& _Right) noexcept {
         return _Left << _Right._Word[0];
     }
 
     _TEMPLATE_CLASS_INTEGRAL(_Ty)
-    _NODISCARD friend constexpr _Ty operator>>(const _Ty _Left, const _Base128& _Right) noexcept {
+    _NODISCARD friend constexpr auto operator>>(const _Ty _Left, const _Base128& _Right) noexcept {
         return _Left >> _Right._Word[0];
     }
 
