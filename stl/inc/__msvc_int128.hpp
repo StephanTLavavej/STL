@@ -346,7 +346,7 @@ struct alignas(16) _Base128 {
             return true;
         }
 
-        if (_Left._Word[1] > _Right._Word[1]) {
+        if (_Right._Word[1] < _Left._Word[1]) {
             return false;
         }
         return _Left._Word[0] < _Right._Word[0];
