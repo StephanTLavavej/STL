@@ -855,12 +855,18 @@ struct alignas(16) _Base128 {
     _TEMPLATE_CLASS_INTEGRAL(_Ty)
     friend constexpr _Ty& operator^=(_Ty& _Left, const _Base128& _Right) noexcept {
         _Left ^= _Right._Word[0];
+        if constexpr (is_same_v<_Ty, bool>) {
+            _Left = _Left || _Right._Word[1] != 0;
+        }
         return _Left;
     }
 
     _TEMPLATE_CLASS_INTEGRAL(_Ty)
     friend constexpr _Ty& operator|=(_Ty& _Left, const _Base128& _Right) noexcept {
         _Left |= _Right._Word[0];
+        if constexpr (is_same_v<_Ty, bool>) {
+            _Left = _Left || _Right._Word[1] != 0;
+        }
         return _Left;
     }
 };
@@ -1000,7 +1006,12 @@ struct _Unsigned128 : _Base128 {
     }
     _TEMPLATE_CLASS_INTEGRAL(_Ty)
     friend constexpr _Ty& operator+=(_Ty& _Left, const _Unsigned128& _Right) noexcept {
-        _Left += _Right._Word[0];
+        if constexpr (is_same_v<_Ty, bool>) {
+            _Left += 0; // emit warnings
+            _Left = static_cast<bool>(_Unsigned128{_Left} + _Right);
+        } else {
+            _Left += _Right._Word[0];
+        }
         return _Left;
     }
 
@@ -1018,7 +1029,12 @@ struct _Unsigned128 : _Base128 {
     }
     _TEMPLATE_CLASS_INTEGRAL(_Ty)
     friend constexpr _Ty& operator-=(_Ty& _Left, const _Unsigned128& _Right) noexcept {
-        _Left -= _Right._Word[0];
+        if constexpr (is_same_v<_Ty, bool>) {
+            _Left -= 0; // emit warnings
+            _Left = static_cast<bool>(_Unsigned128{_Left} - _Right);
+        } else {
+            _Left -= _Right._Word[0];
+        }
         return _Left;
     }
 
@@ -1032,7 +1048,11 @@ struct _Unsigned128 : _Base128 {
     }
     _TEMPLATE_CLASS_INTEGRAL(_Ty)
     friend constexpr _Ty& operator*=(_Ty& _Left, const _Unsigned128& _Right) noexcept {
-        _Left *= _Right._Word[0];
+        if constexpr (is_same_v<_Ty, bool>) {
+            _Left *= (_Right._Word[0] | _Right._Word[1]);
+        } else {
+            _Left *= _Right._Word[0];
+        }
         return _Left;
     }
 
